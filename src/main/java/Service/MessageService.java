@@ -12,8 +12,8 @@ public class MessageService {
     }
 public Message createNewMessage(Message message ){
     //if(message.getMessage_text() == ""){
-       // return null;
-   // }
+       //return null;
+ //}
      return messageDAO.createNewMessage(message);
 }  
 

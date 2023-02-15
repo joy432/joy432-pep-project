@@ -87,8 +87,7 @@ public class SocialMediaController {
         ObjectMapper om = new ObjectMapper();
         Message message = om.readValue(ctx.body(), Message.class);
         Message msg = messageService.createNewMessage(message);
-        if(msg != null){ 
-           
+        if(msg != null){            
             ctx.status(200);
             ctx.json(om.writeValueAsString(msg));
         }else{

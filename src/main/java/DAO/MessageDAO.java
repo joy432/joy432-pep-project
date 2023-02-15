@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,24 +16,27 @@ public class MessageDAO {
     
     public Message createNewMessage( Message message){
         Connection conn = ConnectionUtil.getConnection();
+        String sql =//"insert into message (posted_by, message_text, time_posted_epoch) values(?,?,?)";
+        "insert into message ( message_id, posted_by,  message_text,  time_posted_epoch) values (?,?,?,?)";
         try{
-            PreparedStatement ps = conn.prepareStatement("insert into message (posted_by, message_text, time_posted_epoch) values(?,?,?)");
-            ps.setInt(1, message.getPosted_by());
-            ps.setString(2, message.getMessage_text());
-            ps.setLong(3, message.getTime_posted_epoch());
+            PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            ps.setInt(1, message.getMessage_id());
+            ps.setInt(2, message.getPosted_by());
+            ps.setString(3, message.getMessage_text());
+            ps.setLong(4, message.getTime_posted_epoch());
             
             ps.executeUpdate();
-           /* ResultSet rs = ps.getGeneratedKeys();
+            ResultSet rs = ps.getGeneratedKeys();
             if(rs.next()){
                 int generated_message_id = (int) rs.getLong(1);
                 return new Message(generated_message_id, message.getPosted_by(), message.getMessage_text(),
                  message.getTime_posted_epoch());
             }
-            */
+            
                  
             
         }catch(SQLException e){
-            e.printStackTrace();
+            System.out.println(e.getMessage());
 
         }
         return null;

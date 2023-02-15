@@ -40,9 +40,9 @@ public class AccountDAO {
     
     public Account verifyUserLogin(String username, String password){
         Connection conn = ConnectionUtil.getConnection();
-        
+        String sql ="select * from account where username = ? and password=?";
         try{
-            PreparedStatement ps = conn.prepareStatement("select * from account where username = ? and password=?");
+            PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, username);
             ps.setString(2, password);
           

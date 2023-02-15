@@ -114,39 +114,33 @@ public class SocialMediaController {
 
     }      
 
-    private void deleteMessageByIdHandler(Context ctx) throws JsonProcessingException{
+    private void deleteMessageByIdHandler(Context ctx) throws JsonProcessingException , JsonMappingException{
         ObjectMapper om = new ObjectMapper();
         //Message message = om.readValue(ctx.body(), Message.class);
         int message_input = Integer.parseInt(ctx.pathParam("message_id"));
         Message msg = messageService.deleteMessageById(message_input);
 
-        //ObjectMapper om = new ObjectMapper();
-        //Message message = om.readValue(ctx.body(), Message.class);
-        //Message msg = messageService.deleteMessageById(message);
-        //int message_delete = Integer.parseInt(ctx.pathParam("message_id"));
-        
-       // if(msg == null){
-          //ctx.json(msg);  
-         // ctx.status(200) ;
+    
          if (msg != null){
           ctx.json(om.writeValueAsString(msg));
           ctx.status(200);
         }else{
             ctx.body();
         }
-        //delete(ctx, msg.message_id);
+       
     }
     private void updateMessageByIdHandler(Context ctx) throws JsonProcessingException{
         ObjectMapper om = new ObjectMapper();
         Message message = om.readValue(ctx.body(), Message.class);
         int message_id = Integer.parseInt(ctx.pathParam("message_id"));
-        Message massage = messageService.updateMessageById(message_id);
+        Message messages = messageService.updateMessageById(message_id, message);
        
-        if(message == null || message.getMessage_text()== null ){
-            ctx.status(400);
+        if(messages != null){     
+            ctx.json(om.writeValueAsString(messages));
+            ctx.status(200);
         }else{
-            ctx.json(message);
-        }        
+                
+        }     ctx.status(400);   
     }
 
     private void getAllMessagesByIdHandler (Context ctx){

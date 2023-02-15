@@ -8,7 +8,7 @@ public class AccountService {
     public AccountService(){
       this.accountDAO = new AccountDAO();
     }
-public int register(){
+public String register(){
     return accountDAO.register();
 }  
 public int userLogin(){

@@ -16,14 +16,14 @@ public class AccountDAO {
         }
     }
 
-    public int register(){
+    public String register(){
         try{
             PreparedStatement ps = conn.prepareStatement("");
             ps.executeUpdate();
         }catch(SQLException e){
             e.printStackTrace();
         }
-        return 0;
+        return "";
     }
     public int userLogin(){
         try{

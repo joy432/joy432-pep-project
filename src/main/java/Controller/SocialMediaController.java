@@ -134,13 +134,13 @@ public class SocialMediaController {
         Message message = om.readValue(ctx.body(), Message.class);
         int message_id = Integer.parseInt(ctx.pathParam("message_id"));
         Message messages = messageService.updateMessageById(message_id, message);
-       
+       System.out.println(messages);
         if(messages != null){     
-            ctx.json(om.writeValueAsString(messages));
             ctx.status(200);
-        }else{
-                
-        }     ctx.status(400);   
+            ctx.json(messages);
+        }else {
+            ctx.status(400);  
+        }      
     }
 
     private void getAllMessagesByIdHandler (Context ctx){

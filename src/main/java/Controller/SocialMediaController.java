@@ -39,7 +39,7 @@ public class SocialMediaController {
         app.post("/login", this::verifyUserLoginHandler);
         app.post("/messages", this::createNewMessageHandler);
         app.get("/messages", this::getAllMessagesHandler);
-        app.get("/message{message_id}", this::getMessageByIdHandler);
+        app.get("/messages/{message_id}", this::getMessageByIdHandler);
         app.delete("/messages/{message_id}", this::deleteMessageByIdHandler);
         app.patch("/messages/{message_id}", this::updateMessageByIdHandler);
         app.get("/accounts/{account_id}/messages", this::getAllMessagesByIdHandler);
@@ -81,8 +81,7 @@ public class SocialMediaController {
         }else{
             ctx.status(401);
         }
-
-        }        
+     }        
     
     private void createNewMessageHandler(Context ctx) throws JsonProcessingException{
         ObjectMapper om = new ObjectMapper();
@@ -96,22 +95,23 @@ public class SocialMediaController {
             ctx.status(400);
         }
     }
-
     
     private void getAllMessagesHandler(Context ctx){
         List<Message> messages = messageService.getAllMessages();
-        ctx.json(messages);
-        
+        ctx.json(messages);        
     }
     
     private void getMessageByIdHandler(Context ctx){
      int message_input = Integer.parseInt(ctx.pathParam("message_id"));
      Message msg = messageService.getMessageById(message_input);
-     ctx.json(msg); 
+     if(msg != null ){
+        ctx.status(200);
+        ctx.json(msg);
+     }else{
+        ctx.status(400);
+     }
 
-     
-    } 
-     
+    }      
 
     private void deleteMessageByIdHandler(Context ctx){
         int message_delete = Integer.parseInt(ctx.pathParam("message_id"));
@@ -133,8 +133,7 @@ public class SocialMediaController {
             ctx.json(updatedMessage);
         }else{
             ctx.status(400);
-        }
-        
+        }        
     }
 
     private void getAllMessagesByIdHandler (Context ctx){

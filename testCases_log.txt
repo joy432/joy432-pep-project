@@ -25,7 +25,7 @@
 [INFO]  T E S T S
 [INFO] -------------------------------------------------------
 [INFO] Running AuthIntegrationTest
-[INFO] Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 8.821 s - in AuthIntegrationTest
+[INFO] Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 8.457 s - in AuthIntegrationTest
 [INFO] Running MessagingIntegrationTest
 Message{message_id=1, posted_by=1, message_text='updated message', time_posted_epoch=1669947792}
 Referential integrity constraint violation: "CONSTRAINT_63: PUBLIC.MESSAGE FOREIGN KEY(POSTED_BY) REFERENCES PUBLIC.ACCOUNT(ACCOUNT_ID) (1)"; SQL statement:
@@ -36,7 +36,7 @@ insert into message (posted_by, message_text, time_posted_epoch) values(?,?,?) [
 null
 null
 null
-[INFO] Tests run: 20, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 20.671 s - in MessagingIntegrationTest
+[INFO] Tests run: 20, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 20.618 s - in MessagingIntegrationTest
 [INFO] 
 [INFO] Results:
 [INFO] 
@@ -45,6 +45,6 @@ null
 [INFO] ------------------------------------------------------------------------
 [INFO] BUILD SUCCESS
 [INFO] ------------------------------------------------------------------------
-[INFO] Total time:  36.854 s
-[INFO] Finished at: 2023-02-15T20:21:19Z
+[INFO] Total time:  32.601 s
+[INFO] Finished at: 2023-02-15T21:53:53Z
 [INFO] ------------------------------------------------------------------------

@@ -29,14 +29,18 @@ public Message getMessageById(int message_id){
 }
 
 public Message deleteMessageById(int message_id){
-    return messageDAO.deleteMessageById(message_id);
+     messageDAO.deleteMessageById(message_id);
+    //if(msg == null){
+      //  return null;
+    //}
+     return null;
 }   
 public Message updateMessageById(int message_id){
     return messageDAO.updateMessageById(message_id);
 
 }
 
-public Message getAllMessagesById(int account_id){
+public List<Message> getAllMessagesById(int account_id){
     return messageDAO.getAllMessagesById(account_id);
 }
 

@@ -78,12 +78,23 @@ public class MessageDAO {
         return null;
     }
     
-    public Message deleteMessageById(int message_id){
+    public Message deleteMessageById( int message_id){
         Connection conn = ConnectionUtil.getConnection();
+        String sql ="delete from message where message_id = ?";
         try{
-            PreparedStatement ps = conn.prepareStatement("delete from message where message_id = ?");
+            PreparedStatement ps = conn.prepareStatement(sql);
             ps.setInt(1, message_id );
-            ps.executeUpdate();
+            
+             ResultSet rs = ps.executeQuery();             
+            while(rs.next()){
+                Message message = new Message(rs.getInt("message_id"),
+                 rs.getInt("posted_by"), 
+                 rs.getString("message_text"), 
+                 rs.getLong("time_posted_epoch"));                       
+                return message;
+            }
+            
+            
         }catch(SQLException e){
             e.printStackTrace();
         }
@@ -100,21 +111,33 @@ public class MessageDAO {
         }
         return null;
     }
-    public Message getAllMessagesById(int account_id){
+
+    public List<Message> getAllMessagesById(int account_id){
         Connection conn = ConnectionUtil.getConnection();
+        List<Message> messages = new ArrayList<>();    
         try{
-            PreparedStatement ps = conn.prepareStatement("select * from message (account_id ) values (?)");
+            PreparedStatement ps = conn.prepareStatement("select * from message where posted_by =  ?");
             ps.setInt(1, account_id);
-            ps.executeUpdate();
+           
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                Message message = new Message(rs.getInt("message_id"),
+                rs.getInt("posted_by"), 
+                rs.getString("message_text"), 
+                rs.getLong("time_posted_epoch"));
+                messages.add(message);                
+            }
+
         }catch(SQLException e){
             e.printStackTrace();
         }
-        return null;
+           return messages;
        
     }
-    
+}
+
    
     
     
-}
+
 

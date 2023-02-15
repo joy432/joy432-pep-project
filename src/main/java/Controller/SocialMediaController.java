@@ -3,6 +3,7 @@ package Controller;
 import java.util.List;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import Model.Account;
@@ -113,15 +114,23 @@ public class SocialMediaController {
 
     }      
 
-    private void deleteMessageByIdHandler(Context ctx){
-        int message_delete = Integer.parseInt(ctx.pathParam("message_id"));
-        Message msg = messageService.deleteMessageById(message_delete);
-        if(msg != null){
-          System.out.println(ctx.json(msg));   
-        }
-        if(msg == null){
-          System.out.println(ctx.json(msg));
-        }     
+    private void deleteMessageByIdHandler(Context ctx) throws JsonProcessingException{
+        int message_input = Integer.parseInt(ctx.pathParam("message_id"));
+        Message msg = messageService.deleteMessageById(message_input);
+
+        //ObjectMapper om = new ObjectMapper();
+        //Message message = om.readValue(ctx.body(), Message.class);
+        //Message msg = messageService.deleteMessageById(message);
+        //int message_delete = Integer.parseInt(ctx.pathParam("message_id"));
+        
+       // if(msg == null){
+          //ctx.json(msg);  
+         // ctx.status(200) ;
+         if (msg != null){
+          ctx.json(msg);
+          ctx.status(200);
+        } 
+        delete(ctx.json);
     }
     private void updateMessageByIdHandler(Context ctx) throws JsonProcessingException{
        
@@ -138,12 +147,11 @@ public class SocialMediaController {
 
     private void getAllMessagesByIdHandler (Context ctx){
         int account_input = Integer.parseInt(ctx.pathParam("account_id"));
-        Message msg = messageService.getAllMessagesById(account_input);
-
-        
-       
-        // ctx.json(msg.writeValueAsString(updatedFlight));
-        
+        List<Message> messages = messageService.getAllMessagesById(account_input);
+        if(messages != null){
+            ctx.json(messages);
+            
+        }   
    
        
         

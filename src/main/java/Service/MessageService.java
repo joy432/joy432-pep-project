@@ -1,28 +1,43 @@
 package Service;
 
+import java.util.List;
+
 import DAO.MessageDAO;
+import Model.Message;
 
 public class MessageService {
     MessageDAO messageDAO;
     public MessageService(){
        this.messageDAO = new MessageDAO();
     }
-public void createMessage(){
-     messageDAO.createMessage();
-}   
-public String getAllMessages(){
+public Message createNewMessage(Message message ){
+    //if(message.getMessage_text() == ""){
+       // return null;
+   // }
+     return messageDAO.createNewMessage(message);
+}  
+
+  
+public List<Message> getAllMessages(){
     return messageDAO.getAllMessages();
 }
-public String getMessageById(){
-    return messageDAO.getMessageById();
+
+
+public Message getMessageById(int message_id){
+    return messageDAO.getMessageById(message_id);
 }
-public void deleteMessageById(){
-    messageDAO.deleteMessageById();
+
+public Message deleteMessageById(int message_id){
+    return messageDAO.deleteMessageById(message_id);
 }   
-public void updateMessageById(){
-    messageDAO.updateMessageById();
-} 
-public String getAllMessagesById(){
-    return messageDAO.getAllMessagesById();
+public Message updateMessageById(int message_id){
+    return messageDAO.updateMessageById(message_id);
+
 }
+
+public Message getAllMessagesById(int account_id){
+    return messageDAO.getAllMessagesById(account_id);
 }
+
+}
+

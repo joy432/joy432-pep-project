@@ -1,17 +1,29 @@
 package Service;
 
 import DAO.AccountDAO;
+import Model.Account;
 
 public class AccountService {
     AccountDAO accountDAO;
+    public String username;
+    public int account_id;
 
     public AccountService(){
       this.accountDAO = new AccountDAO();
     }
-public String register(){
-    return accountDAO.register();
+    public Account createNewAccount(Account account){
+        if(account.getUsername() != "" && account.getPassword().length()>=4 ){
+            return accountDAO.createNewAccount(account);
+        }else{
+            return null;
+        }        
+    
 }  
-public int userLogin(){
-    return accountDAO.userLogin();
-}  
+    public Account verifyUserLogin(Account account){
+
+     return accountDAO.verifyUserLogin(account.getUsername(), account.getPassword());
+
+   
+    }  
+   
 }

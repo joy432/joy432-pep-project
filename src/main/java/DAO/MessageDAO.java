@@ -80,21 +80,21 @@ public class MessageDAO {
     
     public Message deleteMessageById( int message_id){
         Connection conn = ConnectionUtil.getConnection();
-        String sql ="delete from message where message_id = ?";
+        String sql ="DELETE FROM message WHERE message_id = ?";
         try{
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setInt(1, message_id );
             
-             ResultSet rs = ps.executeQuery();             
+             /*ResultSet rs = ps.executeUpdate();             
             while(rs.next()){
                 Message message = new Message(rs.getInt("message_id"),
                  rs.getInt("posted_by"), 
                  rs.getString("message_text"), 
                  rs.getLong("time_posted_epoch"));                       
-                return message;
-            }
+                return message;            }
             
-            
+            */
+          ps.executeUpdate();
         }catch(SQLException e){
             e.printStackTrace();
         }

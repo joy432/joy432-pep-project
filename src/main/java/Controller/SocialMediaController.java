@@ -41,7 +41,7 @@ public class SocialMediaController {
         app.post("/messages", this::createNewMessageHandler);
         app.get("/messages", this::getAllMessagesHandler);
         app.get("/messages/{message_id}", this::getMessageByIdHandler);
-        app.delete("/messages/{message_id}", this::deleteMessageByIdHandler);
+        app.delete("/messages/{message_id}", this::deleteMessageByIdHandler); //deleteMessageByIdHandler(Conte
         app.patch("/messages/{message_id}", this::updateMessageByIdHandler);
         app.get("/accounts/{account_id}/messages", this::getAllMessagesByIdHandler);
        
@@ -115,6 +115,8 @@ public class SocialMediaController {
     }      
 
     private void deleteMessageByIdHandler(Context ctx) throws JsonProcessingException{
+        ObjectMapper om = new ObjectMapper();
+        //Message message = om.readValue(ctx.body(), Message.class);
         int message_input = Integer.parseInt(ctx.pathParam("message_id"));
         Message msg = messageService.deleteMessageById(message_input);
 
@@ -127,21 +129,23 @@ public class SocialMediaController {
           //ctx.json(msg);  
          // ctx.status(200) ;
          if (msg != null){
-          ctx.json(msg);
+          ctx.json(om.writeValueAsString(msg));
           ctx.status(200);
-        } 
-        delete(ctx.json);
+        }else{
+            ctx.body();
+        }
+        //delete(ctx, msg.message_id);
     }
     private void updateMessageByIdHandler(Context ctx) throws JsonProcessingException{
-       
+        ObjectMapper om = new ObjectMapper();
+        Message message = om.readValue(ctx.body(), Message.class);
         int message_id = Integer.parseInt(ctx.pathParam("message_id"));
-        Message updatedMessage = messageService.updateMessageById(message_id);
-        System.out.println(updatedMessage);
+        Message massage = messageService.updateMessageById(message_id);
        
-        if(updatedMessage.message_text != null && updatedMessage.message_text.length() <=255){
-            ctx.json(updatedMessage);
-        }else{
+        if(message == null || message.getMessage_text()== null ){
             ctx.status(400);
+        }else{
+            ctx.json(message);
         }        
     }
 

@@ -61,8 +61,9 @@ public class SocialMediaController {
         Account account = om.readValue(ctx.body(), Account.class);
         Account newAccount = accountService.createNewAccount(account);
         if(newAccount != null){
-            ctx.status(200);
+            
             ctx.json(om.writeValueAsString(newAccount));
+            ctx.status(200);
             
         }else {
             ctx.status(400);
@@ -87,14 +88,15 @@ public class SocialMediaController {
         ObjectMapper om = new ObjectMapper();
         Message message = om.readValue(ctx.body(), Message.class);
         Message msg = messageService.createNewMessage(message);
-        if(msg != null){            
-            ctx.status(200);
+         if(msg != null){            
+            
             ctx.json(om.writeValueAsString(msg));
-        }else{
+            ctx.status(200);
+        }else {
             ctx.status(400);
         }
-
     }
+
     
     private void getAllMessagesHandler(Context ctx){
         List<Message> messages = messageService.getAllMessages();

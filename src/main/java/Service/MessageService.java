@@ -11,11 +11,12 @@ public class MessageService {
        this.messageDAO = new MessageDAO();
     }
 public Message createNewMessage(Message message ){
-    //if(message.getMessage_text() == ""){
-       //return null;
- //}
+    if(message.getMessage_text() == ""){
+       return null;
+  }else{
      return messageDAO.createNewMessage(message);
-}  
+} 
+} 
 
   
 public List<Message> getAllMessages(){
